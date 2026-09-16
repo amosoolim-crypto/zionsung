@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시온성교회 | 휴대폰 홈 화면에 추가하기</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%9D%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF6EE; --ink:#211F2A; --muted:#6B6656;
+    --navy:#1E2438; --navy-deep:#14182A; --gold:#B98B34; --gold-soft:#E4C87C;
+    --wine:#6B2737; --line:#DDD2B8; --card:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#15131A; --ink:#EDE8DD; --muted:#B3AA95;
+      --navy:#0F1220; --navy-deep:#0A0D18; --line:#3A3626; --card:#1D1B24;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#15131A; --ink:#EDE8DD; --muted:#B3AA95;
+    --navy:#0F1220; --navy-deep:#0A0D18; --line:#3A3626; --card:#1D1B24;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans KR',sans-serif; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,.serif { font-family:'Noto Serif KR',serif; font-weight:700; letter-spacing:-0.01em; margin:0; }
+
+  .wrap { max-width:460px; margin:0 auto; padding:40px 22px 60px; }
+
+  .eyebrow { font-size:13px; color:var(--wine); font-weight:500; margin-bottom:10px; }
+  h1 { font-size:27px; line-height:1.35; color:var(--navy); }
+  .lead { margin:14px 0 0; font-size:14.5px; color:var(--muted); }
+
+  .qr-card {
+    margin:32px 0 8px; padding:26px 20px 22px; text-align:center;
+    background:var(--card); border:1px solid var(--gold); border-radius:2px;
+  }
+  .qr-card img { width:180px; height:180px; display:block; margin:0 auto; }
+  .qr-caption { margin-top:14px; font-size:13.5px; color:var(--navy); font-weight:500; }
+  .qr-url { display:inline-block; margin-top:6px; font-size:12.5px; color:var(--muted); text-decoration:none; word-break:break-all; }
+  .qr-url:hover { color:var(--wine); }
+  .print-note { margin:10px 0 0; font-size:12px; color:var(--muted); }
+
+  .kakao-note {
+    margin:22px 0; padding:14px 16px; background:var(--bg);
+    border-left:3px solid var(--gold); font-size:13px; color:var(--navy);
+  }
+  .kakao-note b { color:var(--wine); }
+
+  .tabs { display:flex; margin:34px 0 0; border-bottom:1px solid var(--line); }
+  .tab {
+    flex:1; padding:12px 8px; background:none; border:none; cursor:pointer;
+    font-family:'Noto Sans KR',sans-serif; font-size:14.5px; font-weight:500;
+    color:var(--muted); border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .tab.active { color:var(--navy); border-bottom-color:var(--gold); }
+
+  .steps { list-style:none; counter-reset:step; margin:0; padding:26px 0 0; }
+  .steps li {
+    counter-increment:step; position:relative; padding:0 0 26px 44px; font-size:14.5px;
+  }
+  .steps li:last-child { padding-bottom:0; }
+  .steps li::before {
+    content:counter(step); position:absolute; left:0; top:0;
+    width:28px; height:28px; border-radius:50%; background:var(--navy); color:#F4EEDD;
+    font-family:'Noto Serif KR',serif; font-weight:700; font-size:13.5px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .steps li::after {
+    content:""; position:absolute; left:13px; top:28px; bottom:0; width:1px; background:var(--line);
+  }
+  .steps li:last-child::after { display:none; }
+  .steps .k { font-weight:500; color:var(--navy); }
+  .steps .d { display:block; margin-top:4px; color:var(--muted); font-size:13px; }
+
+  .result {
+    margin:34px 0 0; padding:20px; background:var(--navy); color:#F4EEDD;
+    text-align:center; border-radius:2px;
+  }
+  .result .icon-demo {
+    width:52px; height:52px; margin:0 auto 12px; border-radius:13px; background:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+  }
+  .result p { margin:0; font-size:13.5px; color:#CFC7AC; }
+  .result b { color:#F4EEDD; }
+
+  .faq { margin:34px 0 0; }
+  .faq h2 { font-size:15px; color:var(--navy); margin-bottom:12px; }
+  .faq details { border-top:1px solid var(--line); }
+  .faq details:last-child { border-bottom:1px solid var(--line); }
+  .faq summary { padding:13px 2px; font-size:13.5px; cursor:pointer; color:var(--navy); }
+  .faq summary::marker { color:var(--gold); }
+  .faq details p { margin:0 0 14px 2px; font-size:13px; color:var(--muted); }
+
+  footer { margin-top:44px; text-align:center; font-size:12px; color:var(--muted); }
+
+  @media print {
+    .tabs, .faq, .kakao-note { display:none; }
+    .steps { display:block !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="eyebrow">시온성교회 홈페이지</div>
+    <h1>휴대폰 홈 화면에<br>추가하기</h1>
+    <p class="lead">한 번만 설정해두면, 인터넷 주소를 매번 검색하지 않아도 앱처럼 아이콘 한 번으로 홈페이지를 열 수 있어요.</p>
+
+    <section class="qr-card">
+      <img src="data:image/png;base64,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" alt="시온성교회 홈페이지 QR 코드">
+      <div class="qr-caption">카메라 앱으로 QR코드를 비춰보세요</div>
+      <a class="qr-url" href="https://amosoolim-crypto.github.io/zionsung/">amosoolim-crypto.github.io/zionsung</a>
+      <p class="print-note">이 화면을 인쇄해 주보나 교회 게시판에 붙여두면, 처음 오신 분도 쉽게 찾아오실 수 있어요.</p>
+    </section>
+
+    <div class="kakao-note">
+      <b>카카오톡으로 링크를 받으셨나요?</b> 카카오톡 안에서는 홈 화면 추가가 안 될 수 있어요. 화면 오른쪽 아래 <b>⋮</b> 메뉴를 눌러 <b>"다른 브라우저로 열기"</b>를 선택한 뒤 아래 순서를 따라주세요.
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" id="tabIphone">아이폰 (Safari)</button>
+      <button class="tab" id="tabAndroid">안드로이드 (Chrome)</button>
+    </div>
+
+    <ol class="steps" id="stepsIphone">
+      <li><span class="k">QR코드를 스캔하거나 주소를 입력해 홈페이지를 엽니다.</span><span class="d">반드시 사파리(Safari) 브라우저로 열어주세요.</span></li>
+      <li><span class="k">화면 아래쪽 가운데의 공유 아이콘을 누릅니다.</span><span class="d">네모 안에 위쪽 화살표가 있는 모양이에요.</span></li>
+      <li><span class="k">아래로 내려서 "홈 화면에 추가"를 누릅니다.</span><span class="d">메뉴 목록 중간쯤에 있어요.</span></li>
+      <li><span class="k">이름을 확인하고 오른쪽 위 "추가"를 누릅니다.</span><span class="d">이름은 "시온성교회"로 이미 채워져 있어요.</span></li>
+      <li><span class="k">홈 화면에 아이콘이 생겼는지 확인합니다.</span><span class="d">이제부터 이 아이콘을 누르면 바로 홈페이지가 열려요.</span></li>
+    </ol>
+
+    <ol class="steps" id="stepsAndroid" hidden>
+      <li><span class="k">QR코드를 스캔하거나 주소를 입력해 홈페이지를 엽니다.</span><span class="d">반드시 크롬(Chrome) 브라우저로 열어주세요.</span></li>
+      <li><span class="k">화면 오른쪽 위 점 세 개(⋮) 메뉴를 누릅니다.</span><span class="d">주소창 옆에 세로로 놓인 점 세 개예요.</span></li>
+      <li><span class="k">"홈 화면에 추가" 또는 "앱 설치"를 누릅니다.</span><span class="d">휴대폰 기종에 따라 이름이 조금 다를 수 있어요.</span></li>
+      <li><span class="k">이름을 확인하고 "추가"를 누릅니다.</span><span class="d">이름은 "시온성교회"로 이미 채워져 있어요.</span></li>
+      <li><span class="k">홈 화면에 아이콘이 생겼는지 확인합니다.</span><span class="d">이제부터 이 아이콘을 누르면 바로 홈페이지가 열려요.</span></li>
+    </ol>
+
+    <div class="result">
+      <div class="icon-demo">✝️</div>
+      <p><b>완료!</b> 이제부터는 브라우저에서 주소를 찾지 않아도, 홈 화면 아이콘만 누르면 시온성교회 홈페이지가 바로 열려요.</p>
+    </div>
+
+    <div class="faq">
+      <h2>자주 묻는 질문</h2>
+      <details>
+        <summary>이거 앱을 새로 설치하는 건가요?</summary>
+        <p>아니요. 앱스토어에서 앱을 내려받는 것이 아니라, 홈페이지로 바로 가는 바로가기 아이콘을 만드는 거예요. 인터넷이 연결되어 있어야 열립니다.</p>
+      </details>
+      <details>
+        <summary>아이콘을 지우고 싶으면 어떻게 하나요?</summary>
+        <p>다른 앱 아이콘처럼 길게 눌러서 삭제하시면 됩니다. 홈페이지 자체에는 아무 영향이 없어요.</p>
+      </details>
+      <details>
+        <summary>공유 아이콘이나 점 세 개 메뉴가 안 보여요.</summary>
+        <p>카카오톡, 네이버, 인스타그램 같은 앱 안에서 링크를 열면 이 메뉴가 없을 수 있어요. 위의 안내대로 "다른 브라우저로 열기"를 먼저 눌러주세요.</p>
+      </details>
+    </div>
+
+    <footer>시온성교회 · 경기도 이천시 영창로 261</footer>
+  </main>
+
+  <script>
+    (function () {
+      var tabIphone = document.getElementById('tabIphone');
+      var tabAndroid = document.getElementById('tabAndroid');
+      var stepsIphone = document.getElementById('stepsIphone');
+      var stepsAndroid = document.getElementById('stepsAndroid');
+
+      tabIphone.addEventListener('click', function () {
+        tabIphone.classList.add('active');
+        tabAndroid.classList.remove('active');
+        stepsIphone.hidden = false;
+        stepsAndroid.hidden = true;
+      });
+      tabAndroid.addEventListener('click', function () {
+        tabAndroid.classList.add('active');
+        tabIphone.classList.remove('active');
+        stepsAndroid.hidden = false;
+        stepsIphone.hidden = true;
+      });
+    })();
+  </script>
+</body>
+</html>
