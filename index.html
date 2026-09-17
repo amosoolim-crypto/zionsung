@@ -369,6 +369,7 @@
     <span id="verseText">말씀을 불러오는 중...</span>
     <button type="button" class="read-btn" id="verseReadBtn">오늘 읽었어요</button>
     <span class="streak" id="verseStreak"></span>
+    <button type="button" class="read-btn" id="pushSubscribeBtn" style="margin-left:8px; background:none; border:1px solid var(--gold-soft); color:var(--gold-soft);">🔔 공지 알림 받기</button>
   </div>
 
   <div class="infobar">
@@ -956,24 +957,68 @@
       }).join('');
     })();
 
+    // ---------- 7/8. 주보 · 설교노트 다운로드 목록 ----------
+    // 파일을 리포지토리의 bulletins/ , sermon-notes/ 폴더에 올린 뒤,
+    // 아래 배열에 한 줄씩 추가하면 자동으로 카드가 생성됩니다.
+    var bulletins = [
+      // { date: '2026-09-14', file: 'bulletins/2026-09-14.pdf' },
+      // { date: '2026-09-07', file: 'bulletins/2026-09-07.pdf' }
+    ];
+    var sermonNotes = [
+      // { title: '시냇가에 심은 나무 (시편 1편)', file: 'sermon-notes/2026-09-14.pdf' }
+    ];
+    function renderDocList(elId, items, labelFn) {
+      var el = document.getElementById(elId);
+      if (!el) { return; }
+      if (!items.length) {
+        el.innerHTML = '<div class="doc-card" style="color:#888;">아직 등록된 파일이 없어요. 곧 업데이트됩니다.</div>';
+        return;
+      }
+      el.innerHTML = items.map(function (it) {
+        return '<div class="doc-card"><span>' + labelFn(it) + '</span><a href="' + it.file + '" target="_blank" rel="noopener">다운로드 ↓</a></div>';
+      }).join('');
+    }
+    renderDocList('bulletinList', bulletins, function (it) { return it.date + ' 주보'; });
+    renderDocList('sermonNoteList', sermonNotes, function (it) { return it.title; });
+
     // ---------- 10. 성도 갤러리(라이트박스) ----------
     (function initGallery() {
       var grid = document.getElementById('galleryGrid');
       if (!grid) { return; }
-      var photoCount = 6; // gallery/1.jpg ~ gallery/6.jpg 로 교체해서 사용하세요
-      var html = '';
-      for (var i = 1; i <= photoCount; i++) {
-        html += '<div class="ph" data-n="' + i + '">📷</div>';
-      }
-      grid.innerHTML = html;
+      // 실제 사진으로 바꾸려면 아래 배열에 { src:'gallery/파일명.jpg', caption:'설명' } 형태로 추가하세요.
+      // 예: { src: 'gallery/2026-newfamily.jpg', caption: '2026 새가족 환영회' }
+      var photos = [
+        // { src: 'gallery/1.jpg', caption: '' },
+      ];
+      var placeholderCount = 6;
       var lightbox = document.getElementById('lightbox');
-      grid.querySelectorAll('.ph').forEach(function (ph) {
-        ph.addEventListener('click', function () {
-          document.getElementById('lightboxText').textContent =
-            'gallery/' + ph.dataset.n + '.jpg 자리입니다. 실제 사진 파일을 올리고 <img> 태그로 교체해주세요.';
-          lightbox.classList.add('show');
+
+      if (photos.length) {
+        grid.innerHTML = photos.map(function (p, i) {
+          return '<div class="ph" data-i="' + i + '" style="background:#0000; padding:0;">' +
+            '<img src="' + p.src + '" alt="' + (p.caption || '성도 갤러리 사진') + '" style="width:100%; height:100%; object-fit:cover; border-radius:8px;"></div>';
+        }).join('');
+        grid.querySelectorAll('.ph').forEach(function (ph) {
+          ph.addEventListener('click', function () {
+            var p = photos[ph.dataset.i];
+            document.getElementById('lightboxText').textContent = p.caption || '';
+            lightbox.classList.add('show');
+          });
         });
-      });
+      } else {
+        var html = '';
+        for (var i = 1; i <= placeholderCount; i++) {
+          html += '<div class="ph" data-n="' + i + '">📷</div>';
+        }
+        grid.innerHTML = html;
+        grid.querySelectorAll('.ph').forEach(function (ph) {
+          ph.addEventListener('click', function () {
+            document.getElementById('lightboxText').textContent =
+              '사진 자리입니다. 위 photos 배열에 실제 사진 경로를 추가해주세요.';
+            lightbox.classList.add('show');
+          });
+        });
+      }
       document.getElementById('lightboxClose').addEventListener('click', function () {
         lightbox.classList.remove('show');
       });
@@ -1046,6 +1091,9 @@
     loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js')
       .then(function () {
         return loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js');
+      })
+      .then(function () {
+        return loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
       })
       .then(initFirebaseFeatures)
       .catch(function (err) {
@@ -1292,6 +1340,45 @@
           }).finally(function () { visitSubmit.disabled = false; });
         });
       }
+
+      // ---------- 19. 공지 푸시 알림 구독 ----------
+      // 1) Firebase 콘솔 > 프로젝트 설정 > 클라우드 메시징 > "웹 구성"에서
+      //    "키 쌍 생성"을 눌러 VAPID 키를 발급받아 아래 VAPID_KEY에 붙여넣으세요.
+      // 2) 그 전까지는 버튼을 눌러도 "설정이 필요합니다" 안내만 뜨고 안전하게 무시됩니다.
+      var VAPID_KEY = ''; // 예: 'BN4Gv...'(길게 생긴 공개키 문자열)
+      var pushBtn = document.getElementById('pushSubscribeBtn');
+      if (pushBtn) {
+        pushBtn.addEventListener('click', function () {
+          if (!VAPID_KEY) {
+            alert('아직 알림 기능이 설정 중이에요. 조금만 기다려주세요!');
+            return;
+          }
+          if (!('Notification' in window) || typeof firebase.messaging !== 'function') {
+            alert('이 브라우저는 알림 기능을 지원하지 않아요.');
+            return;
+          }
+          Notification.requestPermission().then(function (permission) {
+            if (permission !== 'granted') {
+              alert('알림을 허용하지 않으셨어요. 브라우저 설정에서 다시 허용할 수 있어요.');
+              return;
+            }
+            var messaging = firebase.messaging();
+            messaging.getToken({ vapidKey: VAPID_KEY }).then(function (token) {
+              if (!token) { alert('알림 등록에 실패했어요. 잠시 후 다시 시도해주세요.'); return; }
+              db.collection('pushSubscribers').doc(token).set({
+                token: token,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).then(function () {
+                pushBtn.textContent = '🔔 알림 신청 완료';
+                pushBtn.disabled = true;
+              }).catch(function (err) { console.warn('구독 저장 실패:', err); });
+            }).catch(function (err) {
+              console.warn('FCM 토큰 발급 실패:', err);
+              alert('알림 등록 중 오류가 발생했어요.');
+            });
+          });
+        });
+      }
     } // end initFirebaseFeatures
   })();
 </script>
@@ -1325,6 +1412,10 @@
       match /visitRequests/{docId} {
         allow create: if true;
         allow read: if false;    // 관리자만 콘솔에서 직접 확인
+      }
+      match /pushSubscribers/{tokenId} {
+        allow create, update: if true;  // 알림 구독 시 토큰 저장/갱신
+        allow read: if false;           // 관리자만 콘솔에서 직접 확인
       }
     }
   }
