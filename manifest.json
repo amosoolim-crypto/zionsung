@@ -1,0 +1,17 @@
+{
+  "name": "시온성교회",
+  "short_name": "시온성교회",
+  "description": "AI시대에 신앙이 생활이 되는 교회 - 하나님께 감사, 성도들과 나눔, 이웃에게 복음",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1E2438",
+  "theme_color": "#1E2438",
+  "orientation": "portrait-primary",
+  "lang": "ko",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

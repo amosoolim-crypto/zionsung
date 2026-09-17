@@ -8,6 +8,19 @@
 <meta name="keywords" content="이천 교회, 이천시 교회, 시온성교회, 창전동 교회, 기독교대한성결교회, 임홍수 목사">
 <link rel="canonical" href="https://amosoolim-crypto.github.io/zionsung/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%9D%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#1E2438">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<!-- 16. Google Analytics(GA4) — 아래 G-XXXXXXXXXX 를 실제 측정 ID로 교체하면 방문자 통계가 켜집니다 -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="시온성교회">
@@ -254,9 +267,109 @@
   .footer-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:18px; color:#6F6852; font-size:12px; }
   @media (max-width:760px) { .footer-grid { grid-template-columns:1fr 1fr; } }
   @media (max-width:480px) { .footer-grid { grid-template-columns:1fr; } }
+
+  /* ===== 신규 기능 스타일 (20가지 업그레이드) ===== */
+  .alert-banner{ background:#7A2E2E; color:#FBEAEA; font-size:13.5px; padding:10px 16px; display:flex;
+    align-items:center; justify-content:center; gap:14px; position:relative; }
+  .alert-banner button{ background:none; border:1px solid #FBEAEA88; color:#FBEAEA; border-radius:4px;
+    padding:2px 8px; font-size:12px; cursor:pointer; }
+  .alert-banner.hide{ display:none; }
+
+  .verse-banner{ background:var(--navy-deep); color:#E9E2CB; text-align:center; padding:14px 16px;
+    font-family:'Noto Serif KR',serif; font-size:14px; line-height:1.7; }
+  .verse-banner b{ color:var(--gold-soft); }
+  .verse-banner .read-btn{ margin-left:10px; font-family:'Noto Sans KR',sans-serif; font-size:12px;
+    background:var(--gold); color:#221A08; border:none; border-radius:4px; padding:4px 10px; cursor:pointer; }
+  .verse-banner .streak{ font-size:12px; color:#B7AE8E; margin-left:8px; }
+
+  .header-tools{ display:flex; align-items:center; gap:6px; margin-right:8px; }
+  .header-tools input[type="search"]{ background:#ffffff14; border:1px solid var(--line-dark); border-radius:16px;
+    color:#F4EEDD; padding:6px 12px; font-size:13px; width:120px; }
+  .header-tools input[type="search"]::placeholder{ color:#B7AE8E; }
+  .header-tools button.lang-btn{ background:none; border:1px solid var(--line-dark); color:#D9CFB0;
+    border-radius:16px; padding:6px 10px; font-size:12.5px; cursor:pointer; }
+  #searchResults{ position:absolute; background:var(--card,#fff); border:1px solid var(--line); border-radius:8px;
+    margin-top:6px; max-width:280px; font-size:13px; box-shadow:0 6px 18px rgba(0,0,0,0.18); z-index:50; display:none; }
+  #searchResults a{ display:block; padding:8px 12px; border-bottom:1px solid var(--line); color:var(--ink,#1E2438); }
+  #searchResults a:last-child{ border-bottom:none; }
+
+  .tools-section .wrap{ display:flex; flex-direction:column; gap:36px; }
+  .tool-block h3{ font-size:18px; margin:0 0 10px; }
+  .tool-block .sub{ font-size:13px; color:var(--muted,#6b6b6b); margin:0 0 16px; }
+
+  .doc-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; }
+  .doc-card{ border:1px solid var(--line); border-radius:8px; padding:12px 14px; font-size:13.5px;
+    display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .doc-card a{ color:var(--gold,#B98B34); font-weight:600; }
+
+  .cal-list{ display:flex; flex-direction:column; gap:8px; }
+  .cal-row{ display:flex; gap:14px; align-items:baseline; border-bottom:1px dashed var(--line); padding:8px 0; }
+  .cal-row .d{ font-weight:700; min-width:78px; color:var(--gold,#B98B34); font-size:13.5px; }
+  .cal-row .t{ font-size:14px; }
+
+  .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; }
+  .gallery-grid .ph{ aspect-ratio:1; border-radius:8px; background:linear-gradient(135deg,var(--navy),var(--navy-deep));
+    display:flex; align-items:center; justify-content:center; color:#E9E2CB88; font-size:22px; cursor:pointer; }
+  .lightbox{ position:fixed; inset:0; background:rgba(10,10,15,0.9); display:none; align-items:center; justify-content:center;
+    z-index:100; padding:24px; }
+  .lightbox.show{ display:flex; }
+  .lightbox .box{ background:var(--navy); color:#E9E2CB; border-radius:10px; padding:24px; max-width:420px; text-align:center; }
+  .lightbox button{ margin-top:14px; background:var(--gold); color:#221A08; border:none; border-radius:6px; padding:8px 16px; cursor:pointer; }
+
+  .live-embed{ position:relative; padding-top:56.25%; border-radius:10px; overflow:hidden; background:#000; }
+  .live-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+  .bible-check{ max-height:220px; overflow-y:auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+    gap:4px; border:1px solid var(--line); border-radius:8px; padding:12px; }
+  .bible-check label{ font-size:12.5px; display:flex; align-items:center; gap:5px; }
+  .bible-check input:checked + span{ text-decoration:line-through; opacity:0.5; }
+  .bible-progress{ font-size:13px; margin-top:8px; color:var(--muted,#6b6b6b); }
+
+  .participate-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+  .form-card{ border:1px solid var(--line); border-radius:10px; padding:18px; }
+  .form-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .form-card .note{ font-size:12px; color:var(--muted,#6b6b6b); margin:0 0 12px; }
+  .form-card input, .form-card textarea{ width:100%; border:1px solid var(--line); border-radius:6px; padding:8px 10px;
+    font-size:13.5px; margin-bottom:8px; font-family:inherit; box-sizing:border-box; }
+  .form-card textarea{ min-height:70px; resize:vertical; }
+  .form-card button{ background:var(--gold,#B98B34); color:#221A08; border:none; border-radius:6px; padding:9px 16px;
+    font-size:13.5px; cursor:pointer; font-weight:600; }
+  .form-card .msg{ font-size:12.5px; margin-top:8px; display:none; }
+  .form-card .msg.ok{ color:#2E7D4F; display:block; }
+  .form-card .msg.err{ color:#B4483C; display:block; }
+
+  .prayer-list{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .prayer-row{ border-top:1px solid var(--line); padding-top:10px; font-size:13.5px; }
+  .prayer-row .meta{ display:flex; justify-content:space-between; align-items:center; }
+  .pray-btn{ background:none; border:1px solid var(--gold,#B98B34); color:var(--gold,#B98B34); border-radius:14px;
+    padding:3px 10px; font-size:12px; cursor:pointer; }
+
+  .like-btn{ background:none; border:none; cursor:pointer; font-size:13px; color:#B4483C; margin-left:8px; }
+  .comment-toggle{ background:none; border:none; color:var(--gold,#B98B34); font-size:12px; cursor:pointer; padding:0; margin-left:8px; }
+  .comment-box{ margin-top:8px; display:none; }
+  .comment-box.open{ display:block; }
+  .comment-item{ font-size:12.5px; border-top:1px dashed var(--line); padding:6px 0; }
+  .comment-box input{ width:70%; font-size:12.5px; padding:5px 8px; border:1px solid var(--line); border-radius:5px; margin-right:6px; }
+  .comment-box button{ font-size:12px; padding:5px 9px; border-radius:5px; border:none; background:var(--gold,#B98B34); cursor:pointer; }
+
+  .kakao-btn{ background:#FEE500; color:#391B1B; border-radius:6px; padding:8px 14px; font-size:13px; font-weight:600;
+    display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
 </style>
 </head>
 <body>
+
+  <!-- 20. 긴급 공지 배너: alerts 배열의 active:true 항목이 있으면 표시. 평소엔 비워두면 됨 -->
+  <div class="alert-banner" id="alertBanner" style="display:none;">
+    <span id="alertText"></span>
+    <button type="button" id="alertClose">닫기</button>
+  </div>
+
+  <!-- 14/6. 오늘의 말씀 배너 + 읽음 체크(스트릭) -->
+  <div class="verse-banner">
+    <span id="verseText">말씀을 불러오는 중...</span>
+    <button type="button" class="read-btn" id="verseReadBtn">오늘 읽었어요</button>
+    <span class="streak" id="verseStreak"></span>
+  </div>
 
   <div class="infobar">
     <div class="wrap">
@@ -279,6 +392,11 @@
         <a href="#gospel">이웃에게 복음</a>
       </nav>
       <div class="header-actions">
+        <div class="header-tools">
+          <input type="search" id="siteSearch" placeholder="사이트 검색" aria-label="사이트 검색">
+          <div id="searchResults"></div>
+          <button type="button" class="lang-btn" id="langToggle" data-lang="ko">EN</button>
+        </div>
         <a class="btn btn-gold" href="#fellowship">새가족 안내</a>
         <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu">메뉴 ▾</button>
       </div>
@@ -396,6 +514,25 @@
         <div class="feed-card"><div class="who">이름 비공개 <span>· 어제</span></div><p>건강검진 결과가 걱정보다 좋게 나왔어요. 작은 일에도 감사한 하루였습니다.</p></div>
       </div>
       <div class="feed-more"><a class="btn btn-outline-dark" href="https://amosoolim-crypto.github.io/amosoo/" target="_blank" rel="noopener">공개 나눔 피드에서 '하나님께 감사' 더보기 →</a></div>
+
+      <div class="tool-block" id="bible-plan" style="margin-top:40px; border-top:1px solid var(--line); padding-top:32px;">
+        <h3>📖 성경읽기표</h3>
+        <p class="sub">말씀을 읽으며 하나님께 감사한 하루를 시작해보세요. 읽은 책을 체크하면 이 브라우저에 저장됩니다.</p>
+        <div class="bible-check" id="bibleCheck"></div>
+        <div class="bible-progress" id="bibleProgress"></div>
+      </div>
+
+      <div class="tool-block" id="sermon-notes" style="margin-top:32px;">
+        <h3>📝 설교노트 · 큐티자료</h3>
+        <p class="sub">감사의 말씀을 다시 묵상할 수 있도록 설교노트와 큐티자료를 준비했어요. (<code>sermon-notes/</code> 폴더에 PDF를 올리고 목록을 채우면 표시됩니다)</p>
+        <div class="doc-list" id="sermonNoteList"></div>
+      </div>
+
+      <div class="tool-block" id="bulletins" style="margin-top:32px;">
+        <h3>📰 주보 아카이브</h3>
+        <p class="sub">지난 주 예배와 감사제목이 담긴 주보를 PDF로 확인하세요. (<code>bulletins/</code> 폴더에 파일을 올리고 목록을 추가하면 됩니다)</p>
+        <div class="doc-list" id="bulletinList"></div>
+      </div>
     </div>
   </section>
 
@@ -467,6 +604,50 @@
         <div class="feed-card"><div class="who">최○○ 형제 <span>· 청년부</span></div><p>취업 준비로 무거웠는데, 청년부 셀원들이 함께 기도해줘서 큰 힘이 됐습니다.</p></div>
       </div>
       <div class="feed-more"><a class="btn btn-outline-dark" href="https://amosoolim-crypto.github.io/amosoo/" target="_blank" rel="noopener">공개 나눔 피드에서 '성도들과 나눔' 더보기 →</a></div>
+
+      <div class="tool-block" id="calendar" style="margin-top:40px; border-top:1px solid var(--line); padding-top:32px;">
+        <h3>📅 다가오는 행사 · 함께하는 자리</h3>
+        <p class="sub">성도들과 나눌 다가오는 행사예요. 지난 일정은 자동으로 사라집니다.</p>
+        <div class="cal-list" id="calList"></div>
+      </div>
+
+      <div class="tool-block" id="gallery" style="margin-top:32px;">
+        <h3>📷 성도 갤러리</h3>
+        <p class="sub">함께 나눈 순간들을 사진으로 만나보세요. 누르면 크게 볼 수 있어요.</p>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </div>
+
+      <div class="participate-grid" style="margin-top:32px;">
+        <div class="form-card" id="prayer-board">
+          <h4>🙏 기도제목 나누기</h4>
+          <p class="note">올려주신 기도제목은 성도들이 함께 볼 수 있어요.</p>
+          <input type="text" id="prayerName" placeholder="이름(선택, 비우면 익명)">
+          <textarea id="prayerText" placeholder="기도제목을 적어주세요"></textarea>
+          <button type="button" id="prayerSubmit">기도제목 올리기</button>
+          <div class="msg" id="prayerMsg"></div>
+          <div class="prayer-list" id="prayerList"></div>
+        </div>
+
+        <div class="form-card" id="newcomer-form">
+          <h4>🌱 새가족 등록</h4>
+          <p class="note">등록해주시면 새가족팀이 연락드려요.</p>
+          <input type="text" id="newName" placeholder="이름">
+          <input type="text" id="newPhone" placeholder="연락처">
+          <input type="text" id="newPath" placeholder="교회를 알게 된 경로(선택)">
+          <button type="button" id="newSubmit">등록하기</button>
+          <div class="msg" id="newMsg"></div>
+        </div>
+
+        <div class="form-card" id="visit-form">
+          <h4>✉️ 심방 · 기도 신청 (비공개)</h4>
+          <p class="note">이 내용은 목회자만 확인하며 공개되지 않습니다.</p>
+          <input type="text" id="visitName" placeholder="이름">
+          <input type="text" id="visitContact" placeholder="연락처">
+          <textarea id="visitText" placeholder="요청 내용을 적어주세요"></textarea>
+          <button type="button" id="visitSubmit">신청하기</button>
+          <div class="msg" id="visitMsg"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -504,8 +685,29 @@
         <div class="feed-card"><div class="who">한○○ 집사 <span>· 전도폭발훈련</span></div><p>처음 만난 이웃과 대화했는데 마음을 열어주셔서 놀랐습니다. 예배에 초청했어요.</p></div>
       </div>
       <div class="feed-more"><a class="btn btn-outline-dark" href="https://amosoolim-crypto.github.io/amosoo/" target="_blank" rel="noopener">공개 나눔 피드에서 '이웃에게 복음' 더보기 →</a></div>
+
+      <div class="tool-block" id="live" style="margin-top:40px; border-top:1px solid var(--line); padding-top:32px;">
+        <h3>📺 온라인 예배로 이웃 초청하기</h3>
+        <p class="sub">아직 교회가 낯선 이웃에게 링크 하나로 예배를 보여주세요. 주일 예배 시간에 맞춰 아래 화면이 자동으로 라이브로 전환됩니다. (유튜브 채널 ID를 실제 값으로 교체해주세요)</p>
+        <div class="live-embed">
+          <iframe id="liveFrame" src="" title="온라인 예배 생중계" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="tool-block" id="kakao-outreach" style="margin-top:32px;">
+        <h3>💬 궁금한 이웃과 바로 연결</h3>
+        <p class="sub">전도할 때 가장 쉬운 다음 걸음은 대화 창구를 열어두는 거예요.</p>
+        <a class="kakao-btn" href="https://pf.kakao.com/_XXXXXX" target="_blank" rel="noopener">💬 카카오톡 채널로 묻기 (링크 교체 필요)</a>
+      </div>
     </div>
   </section>
+
+  <div class="lightbox" id="lightbox">
+    <div class="box">
+      <div id="lightboxText">사진 안내</div>
+      <button type="button" id="lightboxClose">닫기</button>
+    </div>
+  </div>
 
   <section class="install-cta">
     <div class="wrap">
@@ -525,7 +727,7 @@
         </div>
         <div><h4>핵심가치</h4><ul><li><a href="#gratitude">하나님께 감사</a></li><li><a href="#fellowship">성도들과 나눔</a></li><li><a href="#gospel">이웃에게 복음</a></li></ul></div>
         <div><h4>연락처</h4><ul><li>TEL 031-635-8101~3</li><li>FAX 031-635-8106</li><li>amosoolim-crypto.github.io/zionsung</li></ul></div>
-        <div><h4>채널</h4><ul><li><a href="https://www.youtube.com/@%EC%9E%84%ED%99%8D%EC%88%98%EB%AA%A9%EC%82%AC" target="_blank" rel="noopener">유튜브</a></li><li><a href="https://amosoolim-crypto.github.io/happiness-journal/" target="_blank" rel="noopener">행복일지 앱(개인용)</a></li><li><a href="https://amosoolim-crypto.github.io/amosoo/" target="_blank" rel="noopener">공개 나눔 피드</a></li></ul></div>
+        <div><h4>채널</h4><ul><li><a href="https://www.youtube.com/@%EC%9E%84%ED%99%8D%EC%88%98%EB%AA%A9%EC%82%AC" target="_blank" rel="noopener">유튜브</a></li><li><a href="https://amosoolim-crypto.github.io/happiness-journal/" target="_blank" rel="noopener">행복일지 앱(개인용)</a></li><li><a href="https://amosoolim-crypto.github.io/amosoo/" target="_blank" rel="noopener">공개 나눔 피드</a></li><li><a class="kakao-btn" href="https://pf.kakao.com/_XXXXXX" target="_blank" rel="noopener">💬 카카오톡 채널 (링크 교체 필요)</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <span>© 시온성교회 · 기독교대한성결교회</span>
@@ -591,9 +793,246 @@
 -->
 <script>
   (function () {
-    // gstatic.com 스크립트가 광고 차단기·네트워크 문제로 늦게 뜨거나
-    // 실패해도 안전하도록, <script src> 태그 대신 직접 로드하고
-    // 로드가 끝난 뒤에만 Firebase를 초기화합니다.
+    // ============================================================
+    // 항상 실행되는 기능 (Firebase 불필요): 긴급공지, 말씀배너/스트릭,
+    // 검색, 언어토글, 행사캘린더, 갤러리, 성경읽기표, 유튜브 라이브
+    // ============================================================
+
+    // ---------- 20. 긴급 공지 배너 ----------
+    // active:true 인 공지가 있으면 상단에 표시됩니다. 평소엔 빈 배열로 두세요.
+    var alerts = [
+      // { id:'2026-09-20-typhoon', active:false, text:'⚠️ 태풍으로 9/20 저녁예배가 취소되었습니다.' }
+    ];
+    (function initAlert() {
+      var live = alerts.filter(function (a) { return a.active; });
+      if (!live.length) { return; }
+      var a = live[0];
+      if (sessionStorage.getItem('alertDismissed') === a.id) { return; }
+      var banner = document.getElementById('alertBanner');
+      document.getElementById('alertText').textContent = a.text;
+      banner.style.display = 'flex';
+      document.getElementById('alertClose').addEventListener('click', function () {
+        banner.style.display = 'none';
+        try { sessionStorage.setItem('alertDismissed', a.id); } catch (e) {}
+      });
+    })();
+
+    // ---------- 14/6. 오늘의 말씀 배너 + 읽음 스트릭 ----------
+    var verses = [
+      { ref: '시편 1:3', text: '그는 시냇가에 심은 나무가 시절을 좇아 과실을 맺으며 그 잎사귀가 마르지 아니함 같으니' },
+      { ref: '빌립보서 4:6', text: '아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라' },
+      { ref: '시편 23:1', text: '여호와는 나의 목자시니 내가 부족함이 없으리로다' },
+      { ref: '요한복음 3:16', text: '하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니' },
+      { ref: '로마서 8:28', text: '하나님을 사랑하는 자 곧 그 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라' },
+      { ref: '잠언 3:5-6', text: '너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라' },
+      { ref: '이사야 40:31', text: '오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리가 날개치며 올라감 같을 것이요' },
+      { ref: '마태복음 11:28', text: '수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라' },
+      { ref: '갈라디아서 5:22-23', text: '오직 성령의 열매는 사랑과 희락과 화평과 오래 참음과 자비와 양선과 충성과' },
+      { ref: '데살로니가전서 5:16-18', text: '항상 기뻐하라 쉬지 말고 기도하라 범사에 감사하라' }
+    ];
+    (function initVerse() {
+      function dayOfYear(d) {
+        var start = new Date(d.getFullYear(), 0, 0);
+        var diff = d - start;
+        return Math.floor(diff / 864e5);
+      }
+      var today = new Date();
+      var todayKey = today.toISOString().slice(0, 10);
+      var v = verses[dayOfYear(today) % verses.length];
+      document.getElementById('verseText').innerHTML = '<b>' + v.ref + '</b> — ' + v.text;
+
+      var STORE_KEY = 'verseReadDates';
+      function getReadDates() {
+        try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch (e) { return []; }
+      }
+      function computeStreak(dates) {
+        var set = {}; dates.forEach(function (d) { set[d] = true; });
+        var streak = 0; var cur = new Date();
+        while (true) {
+          var key = cur.toISOString().slice(0, 10);
+          if (set[key]) { streak++; cur.setDate(cur.getDate() - 1); } else { break; }
+        }
+        return streak;
+      }
+      function refreshStreakUI() {
+        var dates = getReadDates();
+        var btn = document.getElementById('verseReadBtn');
+        var streakEl = document.getElementById('verseStreak');
+        var doneToday = dates.indexOf(todayKey) !== -1;
+        btn.textContent = doneToday ? '오늘 읽음 ✓' : '오늘 읽었어요';
+        btn.disabled = doneToday;
+        var streak = computeStreak(dates);
+        streakEl.textContent = streak > 0 ? ('🔥 ' + streak + '일 연속') : '';
+      }
+      document.getElementById('verseReadBtn').addEventListener('click', function () {
+        var dates = getReadDates();
+        if (dates.indexOf(todayKey) === -1) {
+          dates.push(todayKey);
+          try { localStorage.setItem(STORE_KEY, JSON.stringify(dates)); } catch (e) {}
+        }
+        refreshStreakUI();
+      });
+      refreshStreakUI();
+    })();
+
+    // ---------- 15. 다국어(한/영) 간단 토글 ----------
+    (function initLang() {
+      var dict = {
+        '하나님께 감사': 'Thanks to God',
+        '성도들과 나눔': 'Sharing with Believers',
+        '이웃에게 복음': 'Gospel to Neighbors',
+        '새가족 안내': 'New Here?'
+      };
+      var btn = document.getElementById('langToggle');
+      if (!btn) { return; }
+      var isEn = false;
+      var targets = Array.prototype.slice.call(document.querySelectorAll('nav.pillar-nav a, .btn-gold'));
+      btn.addEventListener('click', function () {
+        isEn = !isEn;
+        btn.textContent = isEn ? '한글' : 'EN';
+        targets.forEach(function (el) {
+          var ko = el.getAttribute('data-ko') || el.textContent.trim();
+          if (!el.getAttribute('data-ko')) { el.setAttribute('data-ko', ko); }
+          if (isEn && dict[ko]) {
+            el.textContent = dict[ko];
+          } else {
+            el.textContent = el.getAttribute('data-ko');
+          }
+        });
+      });
+    })();
+
+    // ---------- 13. 사이트 내 검색 ----------
+    (function initSearch() {
+      var input = document.getElementById('siteSearch');
+      var results = document.getElementById('searchResults');
+      if (!input) { return; }
+      function runSearch() {
+        var q = input.value.trim();
+        if (q.length < 1) { results.style.display = 'none'; return; }
+        var headings = Array.prototype.slice.call(document.querySelectorAll('h1,h2,h3,h4'));
+        var matches = headings.filter(function (h) {
+          return h.textContent.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+        }).slice(0, 6);
+        if (!matches.length) {
+          results.innerHTML = '<a href="#" style="color:#888;">검색 결과가 없어요</a>';
+        } else {
+          results.innerHTML = matches.map(function (h) {
+            var sec = h.closest('section');
+            var id = sec ? sec.id : '';
+            return '<a href="#' + id + '">' + h.textContent + '</a>';
+          }).join('');
+        }
+        results.style.display = 'block';
+      }
+      input.addEventListener('input', runSearch);
+      input.addEventListener('focus', runSearch);
+      document.addEventListener('click', function (e) {
+        if (e.target !== input && !results.contains(e.target)) { results.style.display = 'none'; }
+      });
+    })();
+
+    // ---------- 9. 행사 캘린더 ----------
+    (function initCalendar() {
+      var events = [
+        { date: '2026-09-20', title: '2026년 표어 선포식 (3부 예배 후)' },
+        { date: '2026-09-27', title: '가을 전도축제 · 이슬비 전도 주간' },
+        { date: '2026-10-04', title: '「왕 같은 제사장」 7주차 구역 모임' },
+        { date: '2026-10-11', title: '새가족 환영회' }
+      ];
+      var list = document.getElementById('calList');
+      if (!list) { return; }
+      var today = new Date().toISOString().slice(0, 10);
+      var upcoming = events.filter(function (e) { return e.date >= today; })
+        .sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+      if (!upcoming.length) {
+        list.innerHTML = '<div class="cal-row"><span class="t">예정된 행사가 곧 업데이트됩니다.</span></div>';
+        return;
+      }
+      list.innerHTML = upcoming.map(function (e) {
+        var d = new Date(e.date);
+        var label = (d.getMonth() + 1) + '/' + d.getDate();
+        return '<div class="cal-row"><span class="d">' + label + '</span><span class="t">' + e.title + '</span></div>';
+      }).join('');
+    })();
+
+    // ---------- 10. 성도 갤러리(라이트박스) ----------
+    (function initGallery() {
+      var grid = document.getElementById('galleryGrid');
+      if (!grid) { return; }
+      var photoCount = 6; // gallery/1.jpg ~ gallery/6.jpg 로 교체해서 사용하세요
+      var html = '';
+      for (var i = 1; i <= photoCount; i++) {
+        html += '<div class="ph" data-n="' + i + '">📷</div>';
+      }
+      grid.innerHTML = html;
+      var lightbox = document.getElementById('lightbox');
+      grid.querySelectorAll('.ph').forEach(function (ph) {
+        ph.addEventListener('click', function () {
+          document.getElementById('lightboxText').textContent =
+            'gallery/' + ph.dataset.n + '.jpg 자리입니다. 실제 사진 파일을 올리고 <img> 태그로 교체해주세요.';
+          lightbox.classList.add('show');
+        });
+      });
+      document.getElementById('lightboxClose').addEventListener('click', function () {
+        lightbox.classList.remove('show');
+      });
+    })();
+
+    // ---------- 11. 온라인 예배 생중계 ----------
+    (function initLive() {
+      var frame = document.getElementById('liveFrame');
+      if (!frame) { return; }
+      // 실제 채널 핸들/ID로 교체하세요 (유튜브 스튜디오 > 맞춤설정 > 기본 정보에서 채널 ID 확인)
+      var YOUTUBE_CHANNEL_ID = 'YOUR_CHANNEL_ID';
+      if (YOUTUBE_CHANNEL_ID === 'YOUR_CHANNEL_ID') {
+        frame.parentElement.insertAdjacentHTML('beforeend',
+          '<div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#E9E2CB; font-size:13px; text-align:center; padding:20px;">유튜브 채널 ID를 연결하면 이 자리에 실시간 예배가 나옵니다</div>');
+        return;
+      }
+      frame.src = 'https://www.youtube.com/embed/live_stream?channel=' + YOUTUBE_CHANNEL_ID;
+    })();
+
+    // ---------- 12. 성경읽기표 ----------
+    (function initBiblePlan() {
+      var books = ['창세기','출애굽기','레위기','민수기','신명기','여호수아','사사기','룻기','사무엘상','사무엘하',
+        '열왕기상','열왕기하','역대상','역대하','에스라','느헤미야','에스더','욥기','시편','잠언','전도서','아가',
+        '이사야','예레미야','예레미야애가','에스겔','다니엘','호세아','요엘','아모스','오바댜','요나','미가','나훔',
+        '하박국','스바냐','학개','스가랴','말라기','마태복음','마가복음','누가복음','요한복음','사도행전','로마서',
+        '고린도전서','고린도후서','갈라디아서','에베소서','빌립보서','골로새서','데살로니가전서','데살로니가후서',
+        '디모데전서','디모데후서','디도서','빌레몬서','히브리서','야고보서','베드로전서','베드로후서','요한1서',
+        '요한2서','요한3서','유다서','요한계시록'];
+      var wrap = document.getElementById('bibleCheck');
+      if (!wrap) { return; }
+      var STORE_KEY = 'bibleReadBooks';
+      function getRead() {
+        try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch (e) { return {}; }
+      }
+      var read = getRead();
+      wrap.innerHTML = books.map(function (b, i) {
+        var checked = read[b] ? 'checked' : '';
+        return '<label><input type="checkbox" data-book="' + b + '" ' + checked + '><span>' + b + '</span></label>';
+      }).join('');
+      function refreshProgress() {
+        var read = getRead();
+        var n = Object.keys(read).filter(function (k) { return read[k]; }).length;
+        document.getElementById('bibleProgress').textContent = n + ' / ' + books.length + '권 완료';
+      }
+      wrap.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+        cb.addEventListener('change', function () {
+          var read = getRead();
+          read[cb.dataset.book] = cb.checked;
+          try { localStorage.setItem(STORE_KEY, JSON.stringify(read)); } catch (e) {}
+          refreshProgress();
+        });
+      });
+      refreshProgress();
+    })();
+
+    // ============================================================
+    // Firebase 연동 기능: 공개 나눔 피드(+공감+댓글), 기도제목,
+    // 새가족 등록, 심방신청
+    // ============================================================
     function loadScript(src) {
       return new Promise(function (resolve, reject) {
         var s = document.createElement('script');
@@ -608,87 +1047,298 @@
       .then(function () {
         return loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js');
       })
-      .then(initFeed)
+      .then(initFirebaseFeatures)
       .catch(function (err) {
-        // 실패해도 홈페이지는 기존 예시 글로 정상 표시됨
-        console.warn('공개 나눔 피드: Firebase 스크립트를 불러오지 못했습니다.', err);
+        console.warn('Firebase 기능: 스크립트를 불러오지 못했습니다.', err);
       });
 
-    function initFeed() {
-    if (typeof firebase === 'undefined') {
-      console.warn('공개 나눔 피드: firebase 전역 객체를 찾을 수 없습니다.');
-      return;
-    }
+    function initFirebaseFeatures() {
+      if (typeof firebase === 'undefined') {
+        console.warn('Firebase 기능: firebase 전역 객체를 찾을 수 없습니다.');
+        return;
+      }
 
-    var firebaseConfig = {
-      apiKey: "AIzaSyDrFtnaRBeQCwufSJvJI9LE0PyYP6Ba4uM",
-      authDomain: "amosoo.firebaseapp.com",
-      projectId: "amosoo",
-      storageBucket: "amosoo.firebasestorage.app",
-      messagingSenderId: "202449237451",
-      appId: "1:202449237451:web:27395cc8d94540ade2724e"
-    };
+      var firebaseConfig = {
+        apiKey: "AIzaSyDrFtnaRBeQCwufSJvJI9LE0PyYP6Ba4uM",
+        authDomain: "amosoo.firebaseapp.com",
+        projectId: "amosoo",
+        storageBucket: "amosoo.firebasestorage.app",
+        messagingSenderId: "202449237451",
+        appId: "1:202449237451:web:27395cc8d94540ade2724e"
+      };
 
-    try {
-      firebase.initializeApp(firebaseConfig);
-    } catch (e) {
-      console.warn('Firebase 초기화 실패:', e);
-      return;
-    }
-    var db = firebase.firestore();
+      try {
+        firebase.initializeApp(firebaseConfig);
+      } catch (e) {
+        console.warn('Firebase 초기화 실패:', e);
+        return;
+      }
+      var db = firebase.firestore();
 
-    var CONTAINERS = {
-      gratitude: document.getElementById('feed-gratitude'),
-      fellowship: document.getElementById('feed-fellowship'),
-      gospel: document.getElementById('feed-gospel')
-    };
-    var LIMIT_PER_CATEGORY = 2;
-
-    function timeAgoLabel(ts) {
-      if (!ts) { return ''; }
-      var date = ts.toDate ? ts.toDate() : new Date(ts);
-      var diffMs = Date.now() - date.getTime();
-      var diffH = diffMs / 36e5;
-      if (diffH < 20) { return '오늘'; }
-      if (diffH < 44) { return '어제'; }
-      return date.getMonth() + 1 + '월 ' + date.getDate() + '일';
-    }
-
-    function escapeHtml(str) {
-      return String(str || '').replace(/[&<>"']/g, function (c) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-      });
-    }
-
-    function renderCards(category, docs) {
-      var el = CONTAINERS[category];
-      if (!el || !docs.length) { return; } // 글이 없으면 기존 예시 글을 그대로 둔다
-      el.innerHTML = docs.map(function (d) {
-        var v = d.data();
-        var who = escapeHtml(v.authorName || '이름 비공개');
-        var tag = escapeHtml(v.churchName || timeAgoLabel(v.createdAt));
-        var text = escapeHtml(v.content || '');
-        return '<div class="feed-card"><div class="who">' + who +
-          ' <span>· ' + tag + '</span></div><p>' + text + '</p></div>';
-      }).join('');
-    }
-
-    Object.keys(CONTAINERS).forEach(function (category) {
-      db.collection('posts')
-        .where('category', '==', category)
-        .orderBy('createdAt', 'desc')
-        .limit(LIMIT_PER_CATEGORY)
-        .get()
-        .then(function (snapshot) {
-          renderCards(category, snapshot.docs);
-        })
-        .catch(function (err) {
-          // 인덱스 미생성 등으로 실패해도 홈페이지는 예시 글로 정상 표시됨
-          console.warn('공개 나눔 피드 불러오기 실패(' + category + '):', err);
+      function escapeHtml(str) {
+        return String(str || '').replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
         });
-    });
-    } // end initFeed
+      }
+      function timeAgoLabel(ts) {
+        if (!ts) { return ''; }
+        var date = ts.toDate ? ts.toDate() : new Date(ts);
+        var diffMs = Date.now() - date.getTime();
+        var diffH = diffMs / 36e5;
+        if (diffH < 20) { return '오늘'; }
+        if (diffH < 44) { return '어제'; }
+        return date.getMonth() + 1 + '월 ' + date.getDate() + '일';
+      }
+
+      // ---------- 1/2/3. 공개 나눔 피드: 공감 + 댓글 ----------
+      var CONTAINERS = {
+        gratitude: document.getElementById('feed-gratitude'),
+        fellowship: document.getElementById('feed-fellowship'),
+        gospel: document.getElementById('feed-gospel')
+      };
+      var LIMIT_PER_CATEGORY = 2;
+
+      function renderCards(category, docs) {
+        var el = CONTAINERS[category];
+        if (!el || !docs.length) { return; }
+        el.innerHTML = docs.map(function (d) {
+          var v = d.data();
+          var who = escapeHtml(v.authorName || '이름 비공개');
+          var tag = escapeHtml(v.churchName || timeAgoLabel(v.createdAt));
+          var text = escapeHtml(v.content || '');
+          var likeCount = v.likeCount || 0;
+          return '<div class="feed-card" data-id="' + d.id + '"><div class="who">' + who +
+            ' <span>· ' + tag + '</span>' +
+            '<button type="button" class="like-btn" data-id="' + d.id + '">❤️ <span class="like-count">' + likeCount + '</span></button>' +
+            '<button type="button" class="comment-toggle" data-id="' + d.id + '">댓글</button>' +
+            '</div><p>' + text + '</p>' +
+            '<div class="comment-box" id="cbox-' + d.id + '">' +
+            '<div class="comment-list" id="clist-' + d.id + '">불러오는 중...</div>' +
+            '<div style="margin-top:6px;"><input type="text" class="comment-input" data-id="' + d.id + '" placeholder="응원 댓글 남기기">' +
+            '<button type="button" class="comment-submit" data-id="' + d.id + '">등록</button></div>' +
+            '</div></div>';
+        }).join('');
+
+        el.querySelectorAll('.like-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = btn.dataset.id;
+            btn.disabled = true;
+            db.collection('posts').doc(id).update({
+              likeCount: firebase.firestore.FieldValue.increment(1)
+            }).then(function () {
+              var span = btn.querySelector('.like-count');
+              span.textContent = (parseInt(span.textContent, 10) || 0) + 1;
+            }).catch(function (err) {
+              console.warn('공감 실패:', err);
+            }).finally(function () { btn.disabled = false; });
+          });
+        });
+
+        el.querySelectorAll('.comment-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = btn.dataset.id;
+            var box = document.getElementById('cbox-' + id);
+            box.classList.toggle('open');
+            if (box.classList.contains('open')) { loadComments(id); }
+          });
+        });
+
+        el.querySelectorAll('.comment-submit').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = btn.dataset.id;
+            var input = el.querySelector('.comment-input[data-id="' + id + '"]');
+            var text = input.value.trim();
+            if (!text) { return; }
+            btn.disabled = true;
+            db.collection('posts').doc(id).collection('comments').add({
+              text: text,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(function () {
+              input.value = '';
+              loadComments(id);
+            }).catch(function (err) {
+              console.warn('댓글 등록 실패:', err);
+            }).finally(function () { btn.disabled = false; });
+          });
+        });
+      }
+
+      function loadComments(postId) {
+        var list = document.getElementById('clist-' + postId);
+        db.collection('posts').doc(postId).collection('comments')
+          .orderBy('createdAt', 'desc').limit(5).get()
+          .then(function (snap) {
+            if (snap.empty) { list.innerHTML = '<div class="comment-item">첫 댓글을 남겨보세요.</div>'; return; }
+            list.innerHTML = snap.docs.map(function (d) {
+              var v = d.data();
+              return '<div class="comment-item">' + escapeHtml(v.text || '') + '</div>';
+            }).join('');
+          })
+          .catch(function (err) {
+            list.innerHTML = '<div class="comment-item">댓글을 불러오지 못했습니다.</div>';
+            console.warn('댓글 로드 실패:', err);
+          });
+      }
+
+      Object.keys(CONTAINERS).forEach(function (category) {
+        db.collection('posts')
+          .where('category', '==', category)
+          .orderBy('createdAt', 'desc')
+          .limit(LIMIT_PER_CATEGORY)
+          .get()
+          .then(function (snapshot) { renderCards(category, snapshot.docs); })
+          .catch(function (err) { console.warn('공개 나눔 피드 불러오기 실패(' + category + '):', err); });
+      });
+
+      // ---------- 1. 기도제목 게시판 (prayers 컬렉션) ----------
+      var prayerList = document.getElementById('prayerList');
+      function loadPrayers() {
+        if (!prayerList) { return; }
+        db.collection('prayers').orderBy('createdAt', 'desc').limit(5).get()
+          .then(function (snap) {
+            if (snap.empty) { prayerList.innerHTML = ''; return; }
+            prayerList.innerHTML = snap.docs.map(function (d) {
+              var v = d.data();
+              return '<div class="prayer-row"><div>' + escapeHtml(v.text || '') + '</div>' +
+                '<div class="meta"><span style="color:#888;">' + escapeHtml(v.name || '익명') + '</span>' +
+                '<button type="button" class="pray-btn" data-id="' + d.id + '">🙏 기도했어요 (' + (v.prayCount || 0) + ')</button></div></div>';
+            }).join('');
+            prayerList.querySelectorAll('.pray-btn').forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                var id = btn.dataset.id;
+                btn.disabled = true;
+                db.collection('prayers').doc(id).update({
+                  prayCount: firebase.firestore.FieldValue.increment(1)
+                }).then(loadPrayers).catch(function (err) { console.warn(err); btn.disabled = false; });
+              });
+            });
+          })
+          .catch(function (err) { console.warn('기도제목 로드 실패:', err); });
+      }
+      loadPrayers();
+
+      var prayerSubmit = document.getElementById('prayerSubmit');
+      if (prayerSubmit) {
+        prayerSubmit.addEventListener('click', function () {
+          var text = document.getElementById('prayerText').value.trim();
+          var name = document.getElementById('prayerName').value.trim();
+          var msg = document.getElementById('prayerMsg');
+          if (!text) { msg.textContent = '기도제목 내용을 입력해주세요.'; msg.className = 'msg err'; return; }
+          prayerSubmit.disabled = true;
+          db.collection('prayers').add({
+            text: text, name: name, prayCount: 0,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(function () {
+            document.getElementById('prayerText').value = '';
+            document.getElementById('prayerName').value = '';
+            msg.textContent = '기도제목이 올라갔어요. 함께 기도할게요 🙏';
+            msg.className = 'msg ok';
+            loadPrayers();
+          }).catch(function (err) {
+            msg.textContent = '저장에 실패했습니다: ' + err.message;
+            msg.className = 'msg err';
+          }).finally(function () { prayerSubmit.disabled = false; });
+        });
+      }
+
+      // ---------- 4. 새가족 등록 (newcomers 컬렉션, 비공개) ----------
+      var newSubmit = document.getElementById('newSubmit');
+      if (newSubmit) {
+        newSubmit.addEventListener('click', function () {
+          var name = document.getElementById('newName').value.trim();
+          var phone = document.getElementById('newPhone').value.trim();
+          var path = document.getElementById('newPath').value.trim();
+          var msg = document.getElementById('newMsg');
+          if (!name || !phone) { msg.textContent = '이름과 연락처를 입력해주세요.'; msg.className = 'msg err'; return; }
+          newSubmit.disabled = true;
+          db.collection('newcomers').add({
+            name: name, phone: phone, path: path,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(function () {
+            document.getElementById('newName').value = '';
+            document.getElementById('newPhone').value = '';
+            document.getElementById('newPath').value = '';
+            msg.textContent = '등록되었습니다. 새가족팀이 곧 연락드릴게요!';
+            msg.className = 'msg ok';
+          }).catch(function (err) {
+            msg.textContent = '등록에 실패했습니다: ' + err.message;
+            msg.className = 'msg err';
+          }).finally(function () { newSubmit.disabled = false; });
+        });
+      }
+
+      // ---------- 5. 심방·기도 신청 (visitRequests 컬렉션, 비공개) ----------
+      var visitSubmit = document.getElementById('visitSubmit');
+      if (visitSubmit) {
+        visitSubmit.addEventListener('click', function () {
+          var name = document.getElementById('visitName').value.trim();
+          var contact = document.getElementById('visitContact').value.trim();
+          var content = document.getElementById('visitText').value.trim();
+          var msg = document.getElementById('visitMsg');
+          if (!name || !content) { msg.textContent = '이름과 내용을 입력해주세요.'; msg.className = 'msg err'; return; }
+          visitSubmit.disabled = true;
+          db.collection('visitRequests').add({
+            name: name, contact: contact, content: content, category: 'visit',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(function () {
+            document.getElementById('visitName').value = '';
+            document.getElementById('visitContact').value = '';
+            document.getElementById('visitText').value = '';
+            msg.textContent = '신청되었습니다. 목회자가 곧 연락드릴게요.';
+            msg.className = 'msg ok';
+          }).catch(function (err) {
+            msg.textContent = '신청에 실패했습니다: ' + err.message;
+            msg.className = 'msg err';
+          }).finally(function () { visitSubmit.disabled = false; });
+        });
+      }
+    } // end initFirebaseFeatures
   })();
+</script>
+
+<!--
+  ★★★ 위 Firebase 신규 기능(기도제목/새가족/심방신청/댓글) 사용 전 꼭 확인하세요 ★★★
+  amosoo 프로젝트 Firestore 규칙에 아래 내용이 없다면 추가해야 정상 작동합니다:
+
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      match /posts/{postId} {
+        allow read: if true;
+        allow update: if true;   // 공감(likeCount) 증가를 위해 필요
+        allow create: if request.auth != null;
+        allow delete: if false;
+        match /comments/{commentId} {
+          allow read: if true;
+          allow create: if true;
+        }
+      }
+      match /prayers/{prayerId} {
+        allow read: if true;
+        allow create: if true;
+        allow update: if true;   // 기도했어요 카운트 증가
+      }
+      match /newcomers/{docId} {
+        allow create: if true;
+        allow read: if false;    // 관리자만 콘솔에서 직접 확인
+      }
+      match /visitRequests/{docId} {
+        allow create: if true;
+        allow read: if false;    // 관리자만 콘솔에서 직접 확인
+      }
+    }
+  }
+-->
+
+<!-- 18. PWA: 서비스워커 등록 -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./service-worker.js').catch(function (err) {
+        console.warn('서비스워커 등록 실패:', err);
+      });
+    });
+  }
 </script>
 </body>
 </html>
