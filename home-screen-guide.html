@@ -41,7 +41,9 @@
   .qr-caption { margin-top:14px; font-size:13.5px; color:var(--navy); font-weight:500; }
   .qr-url { display:inline-block; margin-top:6px; font-size:12.5px; color:var(--muted); text-decoration:none; word-break:break-all; }
   .qr-url:hover { color:var(--wine); }
-  .print-note { margin:10px 0 0; font-size:12px; color:var(--muted); }
+  .install-btn { display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding:14px 28px; background:var(--gold); color:#221A08; border:none; border-radius:2px; font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:700; cursor:pointer; text-decoration:none; }
+  .install-btn:hover { background:var(--gold-soft); }
+  .install-hint { margin-top:8px; font-size:12px; color:var(--muted); }
 
   .kakao-note {
     margin:22px 0; padding:14px 16px; background:var(--bg);
@@ -106,12 +108,16 @@
   <main class="wrap">
     <div class="eyebrow">시온성교회 홈페이지</div>
     <h1>휴대폰 홈 화면에<br>추가하기</h1>
-    <p class="lead">한 번만 설정해두면, 인터넷 주소를 매번 검색하지 않아도 앱처럼 아이콘 한 번으로 홈페이지를 열 수 있어요.</p>
+    <p class="lead">한 번만 설정해두면, 인터넷 주소를 매번 검색하지 않아도 앱처럼 아이콘 한 번으로 홈페이지를 열 수 있어요. 대부분의 안드로이드 휴대폰에 기본으로 깔린 크롬 브라우저 기준으로 안내해 드려요.</p>
 
     <section class="qr-card">
       <img src="data:image/png;base64,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" alt="시온성교회 홈페이지 QR 코드">
       <div class="qr-caption">카메라 앱으로 QR코드를 비춰보세요</div>
       <a class="qr-url" href="https://amosoolim-crypto.github.io/zionsung/">amosoolim-crypto.github.io/zionsung</a>
+      <div>
+        <button type="button" class="install-btn" id="installBtn">📲 안드로이드에서 설치하기</button>
+        <div class="install-hint" id="installHint">버튼을 누르면 홈페이지가 새 창으로 열리고, 홈 화면 설치도 도와드려요.</div>
+      </div>
       <p class="print-note">이 화면을 인쇄해 주보나 교회 게시판에 붙여두면, 처음 오신 분도 쉽게 찾아오실 수 있어요.</p>
     </section>
 
@@ -120,23 +126,24 @@
     </div>
 
     <div class="tabs">
-      <button class="tab active" id="tabIphone">아이폰 (Safari)</button>
-      <button class="tab" id="tabAndroid">안드로이드 (Chrome)</button>
+      <button class="tab active" id="tabAndroid">안드로이드 (Chrome)</button>
+      <button class="tab" id="tabIphone">아이폰 (Safari)</button>
     </div>
 
-    <ol class="steps" id="stepsIphone">
+    <ol class="steps" id="stepsAndroid">
+      <li><span class="k">QR코드를 스캔하거나 주소를 입력해 홈페이지를 엽니다.</span><span class="d">반드시 크롬(Chrome) 브라우저로 열어주세요. 삼성 인터넷 등 다른 브라우저는 메뉴 위치가 다를 수 있어요.</span></li>
+      <li><span class="k">화면 오른쪽 위 점 세 개(⋮) 메뉴를 누릅니다.</span><span class="d">주소창 옆에 세로로 놓인 점 세 개예요.</span></li>
+      <li><span class="k">"홈 화면에 추가" 또는 "앱 설치"를 누릅니다.</span><span class="d">휴대폰 기종에 따라 이름이 조금 다를 수 있지만 같은 기능이에요.</span></li>
+      <li><span class="k">이름을 확인하고 "추가" 또는 "설치"를 누릅니다.</span><span class="d">이름은 "시온성교회"로 이미 채워져 있어요.</span></li>
+      <li><span class="k">화면 아래쪽에 안내가 뜨면 "홈 화면에 추가"를 한 번 더 눌러줍니다.</span><span class="d">기종에 따라 확인 창이 한 번 더 뜨기도 해요.</span></li>
+      <li><span class="k">홈 화면에 아이콘이 생겼는지 확인합니다.</span><span class="d">이제부터 이 아이콘을 누르면 바로 홈페이지가 열려요.</span></li>
+    </ol>
+
+    <ol class="steps" id="stepsIphone" hidden>
       <li><span class="k">QR코드를 스캔하거나 주소를 입력해 홈페이지를 엽니다.</span><span class="d">반드시 사파리(Safari) 브라우저로 열어주세요.</span></li>
       <li><span class="k">화면 아래쪽 가운데의 공유 아이콘을 누릅니다.</span><span class="d">네모 안에 위쪽 화살표가 있는 모양이에요.</span></li>
       <li><span class="k">아래로 내려서 "홈 화면에 추가"를 누릅니다.</span><span class="d">메뉴 목록 중간쯤에 있어요.</span></li>
       <li><span class="k">이름을 확인하고 오른쪽 위 "추가"를 누릅니다.</span><span class="d">이름은 "시온성교회"로 이미 채워져 있어요.</span></li>
-      <li><span class="k">홈 화면에 아이콘이 생겼는지 확인합니다.</span><span class="d">이제부터 이 아이콘을 누르면 바로 홈페이지가 열려요.</span></li>
-    </ol>
-
-    <ol class="steps" id="stepsAndroid" hidden>
-      <li><span class="k">QR코드를 스캔하거나 주소를 입력해 홈페이지를 엽니다.</span><span class="d">반드시 크롬(Chrome) 브라우저로 열어주세요.</span></li>
-      <li><span class="k">화면 오른쪽 위 점 세 개(⋮) 메뉴를 누릅니다.</span><span class="d">주소창 옆에 세로로 놓인 점 세 개예요.</span></li>
-      <li><span class="k">"홈 화면에 추가" 또는 "앱 설치"를 누릅니다.</span><span class="d">휴대폰 기종에 따라 이름이 조금 다를 수 있어요.</span></li>
-      <li><span class="k">이름을 확인하고 "추가"를 누릅니다.</span><span class="d">이름은 "시온성교회"로 이미 채워져 있어요.</span></li>
       <li><span class="k">홈 화면에 아이콘이 생겼는지 확인합니다.</span><span class="d">이제부터 이 아이콘을 누르면 바로 홈페이지가 열려요.</span></li>
     </ol>
 
@@ -182,6 +189,32 @@
         tabIphone.classList.remove('active');
         stepsAndroid.hidden = false;
         stepsIphone.hidden = true;
+      });
+
+      var deferredPrompt = null;
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+
+      var CHURCH_HOME_URL = 'https://amosoolim-crypto.github.io/zionsung/';
+
+      var installBtn = document.getElementById('installBtn');
+      var installHint = document.getElementById('installHint');
+      installBtn.addEventListener('click', function () {
+        // 1) 시온성교회 홈페이지를 새 창(새 탭)으로 띄웁니다.
+        window.open(CHURCH_HOME_URL, '_blank');
+
+        // 2) 브라우저가 지원하면 홈 화면 설치도 이어서 안내합니다.
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then(function () { deferredPrompt = null; });
+          installHint.textContent = '홈페이지가 새 창으로 열렸어요. 이어서 홈 화면 설치를 진행해주세요.';
+          return;
+        }
+        tabAndroid.click();
+        stepsAndroid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        installHint.textContent = '홈페이지가 새 창으로 열렸어요. 아래 순서대로 눌러주시면 홈 화면에도 추가돼요.';
       });
     })();
   </script>
