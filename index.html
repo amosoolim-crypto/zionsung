@@ -275,6 +275,16 @@
     padding:2px 8px; font-size:12px; cursor:pointer; }
   .alert-banner.hide{ display:none; }
 
+  /* 21. 새 버전 업데이트 안내 배너 */
+  .update-banner{ background:var(--gold); color:#221A08; font-size:13.5px; padding:10px 16px; display:none;
+    align-items:center; justify-content:center; gap:14px; position:relative; }
+  .update-banner button{ background:#221A08; border:none; color:var(--gold-soft); border-radius:4px;
+    padding:4px 12px; font-size:12.5px; font-weight:700; cursor:pointer; }
+
+  /* 22. 오프라인 상태 표시 */
+  .offline-banner{ background:#3A3626; color:#E9E2CB; font-size:12.5px; padding:7px 16px; display:none;
+    align-items:center; justify-content:center; gap:8px; }
+
   .verse-banner{ background:var(--navy-deep); color:#E9E2CB; text-align:center; padding:14px 16px;
     font-family:'Noto Serif KR',serif; font-size:14px; line-height:1.7; }
   .verse-banner b{ color:var(--gold-soft); }
@@ -362,6 +372,17 @@
   <div class="alert-banner" id="alertBanner" style="display:none;">
     <span id="alertText"></span>
     <button type="button" id="alertClose">닫기</button>
+  </div>
+
+  <!-- 21. 새 버전 업데이트 안내 배너: 서비스워커가 새 버전을 감지하면 표시됩니다 -->
+  <div class="update-banner" id="updateBanner">
+    <span>✨ 새로운 내용이 준비됐어요.</span>
+    <button type="button" id="updateReloadBtn">지금 새로고침</button>
+  </div>
+
+  <!-- 22. 오프라인 상태 표시: 인터넷 연결이 끊기면 표시됩니다 -->
+  <div class="offline-banner" id="offlineBanner">
+    📡 오프라인 상태예요 — 저장된 페이지를 보여드리고 있어요.
   </div>
 
   <!-- 14/6. 오늘의 말씀 배너 + 읽음 체크(스트릭) -->
@@ -715,7 +736,10 @@
       <div class="icon">✝️</div>
       <h2>휴대폰 홈 화면에 시온성교회를 추가해보세요</h2>
       <p>한 번만 설정해두면, 다음부터는 아이콘 하나로 바로 홈페이지가 열려요. QR코드와 함께 아이폰·안드로이드 단계별 안내를 준비했어요.</p>
-      <a class="btn btn-gold" href="home-screen-guide.html">홈 화면에 추가하는 방법 보기 →</a>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button type="button" class="btn btn-gold" id="pwaInstallBtn" style="display:none;">📲 지금 바로 설치하기</button>
+        <a class="btn btn-gold" href="home-screen-guide.html">홈 화면에 추가하는 방법 보기 →</a>
+      </div>
     </div>
   </section>
 
@@ -1421,15 +1445,84 @@
   }
 -->
 
-<!-- 18. PWA: 서비스워커 등록 -->
+<!-- 18/21. PWA: 서비스워커 등록 + 새 버전 감지 -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('./service-worker.js').catch(function (err) {
+      navigator.serviceWorker.register('./service-worker.js').then(function (reg) {
+        // 이미 설치를 기다리고 있는 새 버전이 있으면 바로 배너 표시
+        if (reg.waiting) { showUpdateBanner(reg.waiting); }
+
+        // 새 서비스워커가 발견되면(파일이 바뀌면) 설치 완료 시점에 배너 표시
+        reg.addEventListener('updatefound', function () {
+          var newWorker = reg.installing;
+          if (!newWorker) { return; }
+          newWorker.addEventListener('statechange', function () {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              showUpdateBanner(newWorker);
+            }
+          });
+        });
+
+        // 페이지를 오래 열어둔 경우를 위해 가끔 업데이트 확인
+        setInterval(function () { reg.update(); }, 60 * 60 * 1000);
+      }).catch(function (err) {
         console.warn('서비스워커 등록 실패:', err);
+      });
+
+      // 새 서비스워커가 활성화되면(사용자가 새로고침 눌렀을 때) 페이지를 한 번 새로고침
+      var refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (refreshing) { return; }
+        refreshing = true;
+        window.location.reload();
       });
     });
   }
+
+  function showUpdateBanner(worker) {
+    var banner = document.getElementById('updateBanner');
+    var btn = document.getElementById('updateReloadBtn');
+    if (!banner || !btn) { return; }
+    banner.style.display = 'flex';
+    btn.addEventListener('click', function () {
+      worker.postMessage('SKIP_WAITING');
+    });
+  }
+
+  // ---------- 22. 오프라인 상태 표시 ----------
+  (function initOfflineBanner() {
+    var banner = document.getElementById('offlineBanner');
+    if (!banner) { return; }
+    function refresh() {
+      banner.style.display = navigator.onLine ? 'none' : 'flex';
+    }
+    window.addEventListener('online', refresh);
+    window.addEventListener('offline', refresh);
+    refresh();
+  })();
+
+  // ---------- 23. PWA 설치 버튼(안드로이드/데스크톱 Chrome 등 지원 브라우저) ----------
+  (function initInstallPrompt() {
+    var deferredPrompt = null;
+    var btn = document.getElementById('pwaInstallBtn');
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (btn) { btn.style.display = 'inline-block'; }
+    });
+    if (btn) {
+      btn.addEventListener('click', function () {
+        if (!deferredPrompt) { return; }
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function () { deferredPrompt = null; });
+        btn.style.display = 'none';
+      });
+    }
+    window.addEventListener('appinstalled', function () {
+      if (btn) { btn.style.display = 'none'; }
+    });
+  })();
 </script>
 </body>
 </html>

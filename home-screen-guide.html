@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>시온성교회 | 휴대폰 홈 화면에 추가하기</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%9D%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<!-- index.html과 같은 manifest를 연결해야 이 페이지에서도 beforeinstallprompt가 정상적으로 발생합니다 -->
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#1E2438">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -217,6 +221,16 @@
         installHint.textContent = '홈페이지가 새 창으로 열렸어요. 아래 순서대로 눌러주시면 홈 화면에도 추가돼요.';
       });
     })();
+
+    // 이 페이지도 manifest 범위 안에 있으므로 서비스워커를 등록해두면
+    // 오프라인에서도 안내 페이지가 열리고, index.html과 캐시를 공유합니다.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./service-worker.js').catch(function (err) {
+          console.warn('서비스워커 등록 실패:', err);
+        });
+      });
+    }
   </script>
 </body>
 </html>

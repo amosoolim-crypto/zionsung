@@ -1,6 +1,7 @@
 // 시온성교회 홈페이지 서비스 워커
-// - 18. PWA 오프라인 지원(핵심 페이지 캐시)
+// - 18. PWA 오프라인 지원(핵심 페이지 캐시 + 오프라인 폴백)
 // - 19. 공지 푸시 알림 (Firebase Cloud Messaging)
+// - 21. 새 버전 자동 업데이트 감지
 
 // ---------- 19. FCM 백그라운드 알림 ----------
 // index.html과 동일한 firebaseConfig를 그대로 씁니다.
@@ -32,11 +33,17 @@ try {
   console.warn('FCM 백그라운드 핸들러 초기화 실패:', e);
 }
 
-var CACHE_NAME = 'zionsung-v1';
+// ---------- 18. 오프라인 캐시 ----------
+// 버전을 올리면(v1 -> v2) 예전 캐시는 activate 단계에서 자동 삭제됩니다.
+var CACHE_NAME = 'zionsung-v2';
 var CORE_ASSETS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './home-screen-guide.html',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-512-maskable.png'
 ];
 
 self.addEventListener('install', function (event) {
@@ -47,7 +54,8 @@ self.addEventListener('install', function (event) {
       console.warn('서비스워커 캐시 실패:', err);
     })
   );
-  self.skipWaiting();
+  // 새 서비스워커가 설치되면 대기하지 않고 바로 활성화 대상이 됩니다.
+  // (실제 적용은 아래 SKIP_WAITING 메시지 또는 자동 갱신 시점에 이뤄짐)
 });
 
 self.addEventListener('activate', function (event) {
@@ -62,7 +70,17 @@ self.addEventListener('activate', function (event) {
   self.clients.claim();
 });
 
+// ---------- 21. 페이지 요청으로 즉시 업데이트 적용 ----------
+// index.html에서 "새 버전이 있어요" 배너의 새로고침 버튼을 누르면
+// navigator.serviceWorker.controller.postMessage('SKIP_WAITING') 을 호출합니다.
+self.addEventListener('message', function (event) {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
 // 네트워크 우선, 실패하면 캐시로 폴백 (오프라인에서도 홈페이지가 열리도록)
+// 페이지 이동(navigate) 요청은 캐시에도 없으면 index.html로 최종 폴백합니다.
 self.addEventListener('fetch', function (event) {
   if (event.request.method !== 'GET') { return; }
   event.respondWith(
@@ -72,7 +90,15 @@ self.addEventListener('fetch', function (event) {
         caches.open(CACHE_NAME).then(function (cache) { cache.put(event.request, resClone); });
         return res;
       })
-      .catch(function () { return caches.match(event.request); })
+      .catch(function () {
+        return caches.match(event.request).then(function (cached) {
+          if (cached) { return cached; }
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+          return undefined;
+        });
+      })
   );
 });
 
