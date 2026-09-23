@@ -297,11 +297,18 @@
     color:#F4EEDD; padding:6px 12px; font-size:13px; width:120px; }
   .header-tools input[type="search"]::placeholder{ color:#B7AE8E; }
   .header-tools button.lang-btn{ background:none; border:1px solid var(--line-dark); color:#D9CFB0;
-    border-radius:16px; padding:6px 10px; font-size:12.5px; cursor:pointer; }
+    border-radius:16px; padding:6px 10px; min-height:32px; font-size:12.5px; cursor:pointer; }
   #searchResults{ position:absolute; background:var(--card,#fff); border:1px solid var(--line); border-radius:8px;
     margin-top:6px; max-width:280px; font-size:13px; box-shadow:0 6px 18px rgba(0,0,0,0.18); z-index:50; display:none; }
   #searchResults a{ display:block; padding:8px 12px; border-bottom:1px solid var(--line); color:var(--ink,#1E2438); }
   #searchResults a:last-child{ border-bottom:none; }
+  /* 24. 좁은 화면에서는 검색창/언어토글을 상단바 밖(모바일 메뉴 안)으로 옮겨서
+     로고·새가족 안내·햄버거 버튼과 겹치지 않게 합니다 (JS가 DOM 위치를 옮김) */
+  @media (max-width:880px) {
+    .header-tools{ margin-right:0; padding:13px 20px; border-bottom:1px solid rgba(244,238,221,0.1); }
+    .header-tools input[type="search"]{ flex:1; width:auto; font-size:16px; padding:9px 14px; }
+    .header-tools button.lang-btn{ font-size:14px; padding:9px 12px; }
+  }
 
   .tools-section .wrap{ display:flex; flex-direction:column; gap:36px; }
   .tool-block h3{ font-size:18px; margin:0 0 10px; }
@@ -339,11 +346,11 @@
   .form-card{ border:1px solid var(--line); border-radius:10px; padding:18px; }
   .form-card h4{ margin:0 0 4px; font-size:15.5px; }
   .form-card .note{ font-size:12px; color:var(--muted,#6b6b6b); margin:0 0 12px; }
-  .form-card input, .form-card textarea{ width:100%; border:1px solid var(--line); border-radius:6px; padding:8px 10px;
-    font-size:13.5px; margin-bottom:8px; font-family:inherit; box-sizing:border-box; }
+  .form-card input, .form-card textarea{ width:100%; border:1px solid var(--line); border-radius:6px; padding:10px 12px;
+    font-size:16px; margin-bottom:8px; font-family:inherit; box-sizing:border-box; }
   .form-card textarea{ min-height:70px; resize:vertical; }
-  .form-card button{ background:var(--gold,#B98B34); color:#221A08; border:none; border-radius:6px; padding:9px 16px;
-    font-size:13.5px; cursor:pointer; font-weight:600; }
+  .form-card button{ background:var(--gold,#B98B34); color:#221A08; border:none; border-radius:6px; padding:11px 18px;
+    min-height:44px; font-size:14.5px; cursor:pointer; font-weight:600; }
   .form-card .msg{ font-size:12.5px; margin-top:8px; display:none; }
   .form-card .msg.ok{ color:#2E7D4F; display:block; }
   .form-card .msg.err{ color:#B4483C; display:block; }
@@ -352,15 +359,15 @@
   .prayer-row{ border-top:1px solid var(--line); padding-top:10px; font-size:13.5px; }
   .prayer-row .meta{ display:flex; justify-content:space-between; align-items:center; }
   .pray-btn{ background:none; border:1px solid var(--gold,#B98B34); color:var(--gold,#B98B34); border-radius:14px;
-    padding:3px 10px; font-size:12px; cursor:pointer; }
+    padding:6px 14px; min-height:32px; font-size:12.5px; cursor:pointer; }
 
-  .like-btn{ background:none; border:none; cursor:pointer; font-size:13px; color:#B4483C; margin-left:8px; }
-  .comment-toggle{ background:none; border:none; color:var(--gold,#B98B34); font-size:12px; cursor:pointer; padding:0; margin-left:8px; }
+  .like-btn{ background:none; border:none; cursor:pointer; font-size:14px; color:#B4483C; margin-left:8px; padding:6px; min-height:32px; }
+  .comment-toggle{ background:none; border:none; color:var(--gold,#B98B34); font-size:13px; cursor:pointer; padding:6px; margin-left:4px; min-height:32px; }
   .comment-box{ margin-top:8px; display:none; }
   .comment-box.open{ display:block; }
   .comment-item{ font-size:12.5px; border-top:1px dashed var(--line); padding:6px 0; }
-  .comment-box input{ width:70%; font-size:12.5px; padding:5px 8px; border:1px solid var(--line); border-radius:5px; margin-right:6px; }
-  .comment-box button{ font-size:12px; padding:5px 9px; border-radius:5px; border:none; background:var(--gold,#B98B34); cursor:pointer; }
+  .comment-box input{ width:70%; font-size:16px; padding:8px 10px; border:1px solid var(--line); border-radius:5px; margin-right:6px; box-sizing:border-box; }
+  .comment-box button{ font-size:13px; padding:8px 12px; min-height:36px; border-radius:5px; border:none; background:var(--gold,#B98B34); cursor:pointer; }
 
   .kakao-btn{ background:#FEE500; color:#391B1B; border-radius:6px; padding:8px 14px; font-size:13px; font-weight:600;
     display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
@@ -792,6 +799,25 @@
         });
       });
     }
+
+    // 24. 좁은 화면(≤880px)에서는 검색창/언어토글을 상단바에서 모바일 메뉴 안으로 옮겨서
+    // 로고·새가족 안내·햄버거 버튼과 한 줄에서 겹치지 않도록 합니다.
+    (function relocateHeaderTools() {
+      var tools = document.querySelector('.header-tools');
+      var headerActions = document.querySelector('.header-actions');
+      if (!tools || !mobileMenu || !headerActions) { return; }
+      var mq = window.matchMedia('(max-width:880px)');
+      function place() {
+        if (mq.matches) {
+          if (tools.parentElement !== mobileMenu) { mobileMenu.insertBefore(tools, mobileMenu.firstChild); }
+        } else {
+          if (tools.parentElement !== headerActions) { headerActions.insertBefore(tools, headerActions.firstChild); }
+        }
+      }
+      place();
+      if (mq.addEventListener) { mq.addEventListener('change', place); }
+      else if (mq.addListener) { mq.addListener(place); }
+    })();
 
     document.querySelectorAll('[data-jump-tab]').forEach(function (el) {
       el.addEventListener('click', function (e) {
